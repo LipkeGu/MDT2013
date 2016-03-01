@@ -1,8 +1,8 @@
 <job id="LiteTouch">
-   <script language="VBScript" src="ZTIUtility.vbs"/>
-   <script language="VBScript" src="ZTIDataAccess.vbs"/>
-   <script language="VBScript" src="ZTIDiskUtility.vbs"/>
-   <script language="VBScript">
+	<script language="VBScript" src="ZTIUtility.vbs" />
+	<script language="VBScript" src="ZTIDataAccess.vbs" />
+	<script language="VBScript" src="ZTIDiskUtility.vbs" />
+	<script language="VBScript">
 
 ' // ***************************************************************************
 ' // 
@@ -107,7 +107,9 @@ Class Litetouch
 	    Dim sActiveDNSProbeContent
 	    Dim sActiveProbeHost
 
+		' QoS
 		Dim sQoSMarkApps
+		Dim sDoNotUseNLA
 
 		iRetVal = Success
 
@@ -966,6 +968,7 @@ Class Litetouch
 				sEnableActiveProbe = UCase(oEnvironment.Item("EnableActiveProbe"))
 				sUseMicrosoftNCSIHost = UCase(oEnvironment.Item("UseMicrosoftNCSIHost"))
 				sQoSMarkApps = oEnvironment.Item("QOSDSCPMode")
+				sDoNotUseNLA = oEnvironment.Item("DoNotUseNLA") = "1"
 				sDisableRegistryTools = oEnvironment.Item("DisableRegistryTools")
 
 				' KMS related entries
@@ -1053,21 +1056,24 @@ Class Litetouch
 					oShell.RegWrite "HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\System\DisableRegistryTools", 0, "REG_DWORD"
 				End if
 
+
+				' Configure Network Location Awareness (NLA)
+				oShell.RegWrite "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\QoS\Do not use NLA", sDoNotUseNLA, "REG_SZ"
+				oShell.RegWrite "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip6\QoS\Do not use NLA", sDoNotUseNLA, "REG_SZ"
+				
+				' Enforce strict QoS DSCP Policies
+				if sQoSMarkApps <> "" and sQoSMarkApps = "Ignored" then
+					oShell.RegWrite "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\QoS\Application DSCP Marking Request", sQoSMarkApps, "REG_SZ"
+				End If
+
+				' Enable/Disable and configure Internet Connection Tests (NLA)
 	   			if UCase(sEnableActiveProbe) = "YES" and UCase(sEnableActiveProbe) <> "" then	
 					oShell.RegWrite "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NlaSvc\Parameters\Internet\EnableActiveProbing", 1, "REG_DWORD"
 				Else
 					oShell.RegWrite "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NlaSvc\Parameters\Internet\EnableActiveProbing", 0, "REG_DWORD"
 					oLogging.CreateEntry "Internet Connection test is now disabled!", LogTypeInfo
 				End if
-		
-				' Enforce strict QoS DSCP Policy 
-				oShell.RegWrite "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\QoS\Do not use NLA", "1", "REG_SZ"
-				oShell.RegWrite "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip6\QoS\Do not use NLA", "1", "REG_SZ"
-
-				if sQoSMarkApps <> "" and sQoSMarkApps = "Ignored" then
-					oShell.RegWrite "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\QoS\Application DSCP Marking Request", sQoSMarkApps, "REG_SZ"
-				End If
-				
+						
 				If UCase(sUseMicrosoftNCSIHost) <> "YES" and sActiveDNSProbeContent <> "" and sActiveProbeHost <> "" then
 					oShell.RegWrite "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NlaSvc\Parameters\Internet\StaleThreshold", 2000, "REG_DWORD"
 					oShell.RegWrite "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NlaSvc\Parameters\Internet\WebTimeout", 30, "REG_DWORD"
@@ -1084,7 +1090,7 @@ Class Litetouch
 					oLogging.CreateEntry "Probing Entries changed!", LogTypeInfo
 				End if
 		
-				' Save or apply the Intervals for renewal and Activation against KMS Hosts 
+				' Save or apply the Intervals for renew and activation against KMS Hosts 
 
 				if iVLActivationInterval <> "" and iVLRenewalInterval <> "" then
 					oShell.RegWrite "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SoftwareProtectionPlatform\VLActivationInterval", iVLActivationInterval, "REG_DWORD"
@@ -1111,7 +1117,7 @@ Class Litetouch
 		Else			
 			oEnvironment.Item("UpgradeResult") = oShell.RegRead("HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\Windows\Win10UpgradeStatusCode")
 			oEnvironment.Item("ScriptRoot") = oEnv("ScriptRoot")
-			oEnvironment.Item("RetVal") = ucase(oEnvironment.Item("UpgradeResult"))
+			oEnvironment.Item("RetVal") = UCASE(oEnvironment.Item("UpgradeResult"))
 		End if
 
 
@@ -1797,5 +1803,5 @@ Class Litetouch
 	End function
 
 End Class
-   </script>
+	</script>
 </job>
