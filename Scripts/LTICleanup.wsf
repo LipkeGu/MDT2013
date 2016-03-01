@@ -271,9 +271,7 @@ Class LTICleanup
 			oLogging.CreateEntry "No Windows PE image to delete.", LogTypeInfo
 		End if
 
-		If oUtility.VersionMajor >= 10 then
-			DeleteFile oEnv("SystemRoot") & "\authtest.txt"	
-		End if	
+		DeleteFile oEnv("SystemRoot") & "\authtest.txt"	
 		
 		If oEnvironment.Item("OSVersion") = "WinPE" and UCase(oEnvironment.Item("DoCapture")) = "YES" then
 
