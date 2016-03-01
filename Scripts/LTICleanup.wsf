@@ -1,6 +1,6 @@
 <job id="LTICleanup">
-	<script language="VBScript" src="ZTIUtility.vbs"/>
-	<script language="VBScript" src="ZTIBCDUtility.vbs"/>
+	<script language="VBScript" src="ZTIUtility.vbs" />
+	<script language="VBScript" src="ZTIBCDUtility.vbs" />
 	<script language="VBScript">
 
 ' // ***************************************************************************
@@ -235,11 +235,9 @@ Class LTICleanup
 
 		On Error Goto 0
 
-
 		' Log the warnings and errors
 
 		oLogging.CreateEntry "Logs contained " & iErrors & " errors and " & iWarnings & " warnings.", LogTypeInfo
-
 
 		'//----------------------------------------------------------------------------
 		'//  Remove misc. folders
@@ -256,14 +254,11 @@ Class LTICleanup
 		'//----------------------------------------------------------------------------
 
 		If bOEM then
-
 			oLogging.CreateEntry "No Windows PE image to delete (OEM Scenario).", LogTypeInfo
-
 		Elseif oFSO.FileExists(sSystemDrive & "\sources\boot.wim") then
 
 			' First remove the BOOT.WIM
 			DeleteFile sSystemDrive & "\sources\boot.wim"
-
 
 			' Now if the sources folder is empty, remove it too.
 
@@ -272,14 +267,14 @@ Class LTICleanup
 			Else
 				oLogging.CreateEntry "The " & sSystemDrive & "\sources folder is not empty, not removing.", LogTypeInfo
 			End if
-
 		Else
-
 			oLogging.CreateEntry "No Windows PE image to delete.", LogTypeInfo
-
 		End if
 
-
+		If oUtility.VersionMajor >= 10 then
+			DeleteFile oEnv("SystemRoot") & "\authtest.txt"	
+		End if	
+		
 		If oEnvironment.Item("OSVersion") = "WinPE" and UCase(oEnvironment.Item("DoCapture")) = "YES" then
 
 			' Put an unattend.xml file into place to automate OOBE
