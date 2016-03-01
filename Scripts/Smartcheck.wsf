@@ -1,0 +1,35 @@
+<job id="SmartCheck">
+	<script language="VBScript" src="ZTIDiskUtility.vbs"/>
+	<script language="VBScript" src="ZTIUtility.vbs"/>
+	<script language="VBScript">
+
+Dim oWMI
+Dim strComputer, sSmartStatus, sDiskCaption
+Dim colDisks, disk
+
+strComputer = "."
+sDiskCaption = ""
+
+' Create objects
+Set oWMI = GetObject("winmgmts:\\" & strComputer & "\root\cimv2")
+
+oLogging.CreateEntry "Checking SMART Status...", LogTypeInfo
+Set colDisks = oWMI.ExecQuery("Select * from win32_DiskDrive where MediaType = 'Fixed hard disk media'")
+
+For Each disk in colDisks
+	sSmartStatus = disk.Status
+	sDiskCaption = disk.Caption
+
+	oLogging.ReportProgress "Disk ("& sDiskCaption &") reports SMART Status: " & sSmartStatus, 0
+
+	If sSmartStatus = "OK" Then
+		oLogging.CreateEntry "Disk ("& sDiskCaption &") reports SMART Status: " & sSmartStatus, LogTypeInfo
+	Else
+		oLogging.CreateEntry "Disk ("& sDiskCaption &") reports SMART Status: " & sSmartStatus, LogTypeInfo
+		oLogging.CreateEntry "Deployment will end here untill the SMART problem on Disk " & sDiskCaption & " is solved!", LogTypeError
+
+		Wscript.Quit(1) 
+	End If
+Next
+    </script>
+</job>

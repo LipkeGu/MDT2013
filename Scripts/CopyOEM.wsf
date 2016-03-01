@@ -1,0 +1,444 @@
+<job id="CopyOEM">
+    <script language="VBScript" src="ZTIDiskUtility.vbs" />
+    <script language="VBScript" src="ZTIUtility.vbs" />
+    <script language="VBScript">
+
+	Dim sOEM, sDestinationDrive
+    Dim oWMI,  objFile, sMFG, gMFG, outFile, sNEWMFG, colBaseBoard, colComputerInfo, strComputer, board, scomputer, sManufacturer, sOEMSrc
+    sMFG = "_NONE_"
+	sNEWMFG = "_NONE_"
+	sOEMSrc = ""
+    sManufacturer = "_NONE_"
+    strComputer = "."
+	outFile = ""
+		
+	Function sParseMFG(gMFG)
+		select case UCase(gMFG) 
+		case "ACER"
+			sMFG = "ACER"
+		case "ACTINA"
+			sMFG = "ACTINA"
+		case "ACTION"
+			sMFG = "ACTION"
+		case "ADVENT"
+			sMFG = "ADVENT"
+		case "ALIENWARE"
+			sMFG = "ALIENWARE"
+		case "AOC"
+			sMFG = "AOC"
+		case "AQUARIUS"
+			sMFG = "AQUARIUS"
+		case "ASROCK"
+			sMFG = "ASROCK"
+		case "ASUSTEK COMPUTER INC." 
+			sMFG = "ASUS"
+		case "ASUS"
+			sMFG = "ASUS"
+		case "ATCOMPUTERS"
+			sMFG = "ATCOMP"
+		case "BANGHO"
+			sMFG = "BANGHO"
+		case "BEKO"
+			sMFG = "BEKO"
+		case "BENQ"
+			sMFG = "BENQ"
+		case "BGH"
+			sMFG = "BGH-SA"
+		case "BIOSTAR"
+			sMFG = "BIOSTAR"
+		case "BYTESPEED"
+			sMFG = "BSPEED"
+		case "CASPER"
+			sMFG = "CASPER"
+		case "CCE"
+			sMFG = "CCE"
+		case "CERTERA"
+			sMFG = "CERTERA"
+		case "CHILIGREEN"
+			sMFG = "CHILI"
+		case "COMPAQ" 
+			sMFG = "COMPAQ"
+		case "COMPAQ-PRESARIO"
+			sMFG = "COMPAQ"
+		case "CREA"
+			sMFG = "CREA"
+		case "CZC"
+			sMFG = "CZC"
+		case "DATATEKNIK"
+			sMFG = "DATATEKNIK"
+		case "DELL"
+			sMFG = "DELL"
+		case "DEALINE"
+			sMFG = "DEALINE"
+		case "DEPO" 
+			sMFG = "DEPO"
+		case "DEPO COMPUTERS"
+			sMFG = "DEPO"
+		case "DIGIMIX"
+			sMFG = "DIGIMIX"
+		case "EMACHINES"
+			sMFG = "EMACHINES"
+		case "EPSON"
+			sMFG = "EPSON"
+		case "EQUUS"
+			sMFG = "EQUUS"
+		case "EVEREX"
+			sMFG = "EVEREX"
+		case "EXCIMER"
+			sMFG = "EXCIMER"
+		case "EXO"
+			sMFG = "EXO"
+		case "EXTRA"
+			sMFG = "EXTRA"
+		case "EXPER"
+			sMFG = "EXPER"
+		case "DACE COMPUTERS"
+			sMFG = "EXPER"
+		case "FOUNDER"
+			sMFG = "FOUNDER"
+		case "FOXCONN"
+			sMFG = "FOXCONN"
+		case "AXIOO"
+			sMFG = "FUJITSU"
+		case "FUJITSU"
+			sMFG = "FUJITSU"
+		case "FSC"
+			sMFG = "FUJITSU"
+		case "GATEWAY"
+			sMFG = "GATEWAY"
+		case "GENUINE"
+			sMFG = "GENUINE"
+		case "GERICOM"
+			sMFG = "GERICOM"
+		case "GIGABYTE"
+			sMFG = "GIGABYTE"
+		case "GREATWALL"
+			sMFG = "GWALL"
+		case "GWALL"
+			sMFG = "GWALL"
+		case "HAIER"
+			sMFG = "HAIER"
+		case "HANNSPREE"
+			sMFG = "HANNSPREE"
+		case "HASEE"
+			sMFG = "HASEE"
+		case "HCL"
+			sMFG = "HCL"
+		case "HEDY"
+			sMFG = "HEDY"
+		case "HIGRADED" 
+			sMFG = "HIGRADE"
+		case "HIGRADE"
+			sMFG = "HIGRADE"
+		case "HP-PAVILION"
+			sMFG = "HP"
+		case "HEWLETT-PACKARD"
+			sMFG = "HP"
+		case "HEWLETT" 
+			sMFG = "HP"
+		case "HP"
+			sMFG = "HP"
+		case "HYRICAN"
+			sMFG = "HYRICAN"
+		case "IBM"
+			sMFG = "IBM"
+		case "IMPRESSION"
+			sMFG = "IMPRESSION"
+		case "AIRIS"
+			sMFG = "AIRIS"
+		case "INSYS"
+			sMFG = "INSYS"
+		case "INTEL CORPORATION"
+			sMFG = "INTEL"
+		case "INTEL"
+			sMFG = "INTEL"
+		case "INTELBRAS"
+			sMFG = "INTELBRAS"
+		case "IDEALMAX"
+			sMFG = "INTELBRAS"
+		case "IQON"
+			sMFG = "IQON"
+		case "ITAUTEC"
+			sMFG = "ITAUTEC"
+		case "JETWAY"
+			sMFG = "JETWAY"
+		case "JOOYONTECH"
+			sMFG = "JOOYONTECH"
+		case "INVENTEC"
+			sMFG = "INVENTEC"
+		case "KOHJINSHA"
+			sMFG = "INVENTEC"
+		case "KOUZIRO"
+			sMFG = "KOUZIRO"
+		case "KRAFTWAY"
+			sMFG = "KRAFTWAY"
+		case "K-SYSTEMS"
+			sMFG = "K-SYSTEMS"
+		case "LANIX"
+			sMFG = "LANIX"
+		case "LENOVO"
+			sMFG = "LENOVO"
+		case "LG"
+			sMFG = "LG"
+		case "MATECH"
+			sMFG = "MATECH"
+		case "MAXDATA"
+			sMFG = "MAXDATA"
+		case "MUSTEK"
+			sMFG = "MUSTEK"
+		case "MECER"
+			sMFG = "MUSTEK"
+		case "MEDION"
+			sMFG = "MEDION"
+		case "MEGWARE"
+			sMFG = "MEGAWARE"
+		case "MEGAWARE"
+			sMFG = "MEGAWARE"
+		case "MESH"
+			sMFG = "MESH"
+		case "MITAC"
+			sMFG = "MITAC"
+		case "MOUSE"
+			sMFG = "MOUSE"
+		case "MICRO-STAR"
+		 	sMFG = "MSI"
+		case "MSI"
+			sMFG = "MSI"
+		case "NEC"
+			sMFG = "NEC"
+		case "NOKIA"
+			sMFG = "NOKIA"
+		case "OLIDATA"
+			sMFG = "OLIDATA"
+		case "OLIVETTI"
+			sMFG = "OLIVETTI"
+		case "ONKYO"
+			sMFG = "ONKYO"
+		case "OQO"
+			sMFG = "OQO"
+		case "PACKARD"
+		 	sMFG = "PACKARD"
+		case "PACKARD BELL"
+			sMFG = "PACKARD"
+		case "PANASONIC"
+			sMFG = "PANASONIC"
+		case "PARADIGIT"
+			sMFG = "PARADIGIT"
+		case "PARAGON"
+			sMFG = "PARAGON"
+		case "PHILCO"
+			sMFG = "PHILCO"
+		case "POSITIVO"
+			sMFG = "POSITIVO"
+		case "POWERSPEC"
+			sMFG = "POWERSPEC"
+		case "PROLINK"
+			sMFG = "PROLINK"
+		case "QBEX"
+			sMFG = "QBEX"
+		case "QUANMAX"
+			sMFG = "QUANMAX"
+		case "RMPLC"
+			sMFG = "RMPLC"
+		case "ROVERBOOK"
+			sMFG = "ROVERBOOK"
+		case "SAMSUNG"
+			sMFG = "SAMSUNG"
+		case "SAMSUNG ELECTRONICS CO., LTD."
+			sMFG = "SAMSUNG"
+		case "SCC"
+			sMFG = "CERTERA"
+		case "SEMP"
+			sMFG = "SEMP"
+		case "SENECA"
+			sMFG = "SENECA"
+		case "SHARP"
+			sMFG = "SHARP"
+		case "SHUTTLE"
+			sMFG = "SHUTTLE"
+		case "SIEMENS"
+			sMFG = "SIEMENS"
+		case "SONY"
+			sMFG = "SONY"
+		case "STONE"
+			sMFG = "STONE"
+		case "STRATO"
+			sMFG = "STRATO"
+		case "MICROSOFT"
+			sMFG = "SURFACE"
+		case "SYNNEX"
+			sMFG = "SYNNEX"
+		case "SYSTEMAX"
+			sMFG = "SYSTEMAX"
+		case "TARGA"
+			sMFG = "TARGA"
+		case "TAROX"
+			sMFG = "TAROX"
+		case "TCL"
+			sMFG = "TCL"
+		case "TONGFANG"
+			sMFG = "TONGFANG"
+		case "TOSHIBA"
+			sMFG = "TOSHIBA"
+		case "TRIGEM"
+			sMFG = "TRIGEM"
+		case "TTL"
+			sMFG = "TTL"
+		case "TWINHEAD"
+			sMFG = "TWINHEAD"
+		case "VELOCITY"
+			sMFG = "VELOCITY"
+		case "VESTEL"
+			sMFG = "VESTEL"
+		case "VIEWSONIC"
+			sMFG = "VIEWSONIC"
+		case "VILIV"
+			sMFG = "VILIV"
+		case "VMWARE, INC." 
+			sMFG = "VMWARE"
+		case "VMWARE, INC" 
+			sMFG = "VMWARE"
+		case "VMWARE"
+			sMFG = "VMWARE"
+		case "WDCORP"
+			sMFG = "WDCORP"
+		case "WORTMANN"
+			sMFG = "WORTMANN"
+		case "XPLORE"
+			sMFG = "XPLORE"
+		case "ZOOSTORM"
+			sMFG = "ZOOSTORM"
+		case "ZTSYSTEMS"
+			sMFG = "ZTSYSTEMS"
+		case "SYSTEM MANUFACTURER"
+			sMFG = "SYSTEM MANUFACTURER"
+		End select
+        
+        sManufacturer = sMFG
+    End Function
+
+    Set oWMI = GetObject("winmgmts:\\" & strComputer & "\root\cimv2")
+    Set colComputerInfo = oWMI.ExecQuery("Select * from win32_Computersystem")
+
+    For Each scomputer in colComputerInfo 
+        sParseMFG(scomputer.Manufacturer)
+    Next
+
+    If sManufacturer = "SYSTEM MANUFACTURER" Or sManufacturer = "_NONE_" then 
+        Set colBaseBoard = oWMI.ExecQuery("Select * from win32_Baseboard")
+        
+        For Each board in colBaseBoard
+            sParseMFG(board.Manufacturer)
+        Next
+
+        If sManufacturer = "_NONE_" then
+            oLogging.CreateEntry "[OEM] Using Manufacturer: " & sManufacturer & " for " & sNEWMFG, LogTypeInfo
+        Else
+            oLogging.CreateEntry "[OEM] Using Mainboard Manufacturer: " & sManufacturer, LogTypeInfo
+        End If
+    Else
+        oLogging.CreateEntry "[OEM] Using Computer Manufacturer: " & sManufacturer, LogTypeInfo
+    End If
+	
+	sDestinationDrive = oUtility.GetOSTargetDriveLetter
+	
+	If oFSO.FolderExists(oEnvironment.Item("DeployRoot") & "\Control\" & oEnvironment.Item("TaskSequenceID") & "\$OEM$") then
+		sOEM = oEnvironment.Item("DeployRoot") & "\Control\" & oEnvironment.Item("TaskSequenceID") & "\$OEM$"
+	ElseIf oFSO.FolderExists(oEnvironment.Item("SourcePath") & "\$OEM$") then
+		sOEM = oEnvironment.Item("SourcePath") & "\$OEM$"
+	ElseIf oFSO.FolderExists(oEnvironment.Item("DeployRoot") & "\" & oEnvironment.Item("Architecture") & "\$OEM$") then
+		sOEM = oEnvironment.Item("DeployRoot") & "\" & oEnvironment.Item("Architecture") & "\$OEM$"
+	Else
+		sOEM = oEnvironment.Item("DeployRoot") & "\$OEM$"
+	End If
+
+    Function oCreateOOBEcmd
+		outFile = sDestinationDrive & "\Windows\Setup\Scripts\OOBE.cmd"
+			
+		If not oFSO.FileExists(outFile) then
+			Set objFile = oFSO.CreateTextFile(outFile, true)
+
+			' Import the OEM Settings
+			objFile.Write "@Echo off" & vbCrLf & "cls" & vbCrLf & "REG IMPORT \Windows\System32\oobe\info\" & sManufacturer & ".reg" & vbCrLf
+			objFile.Close
+		End If
+	End Function
+
+	If oFSO.FolderExists(sOEM & "\$1") then
+		oFSO.CopyFolder sOEM & "\$1", sDestinationDrive, true
+	End If
+
+	If oFSO.FolderExists(sOEM & "\$$") then
+		oFSO.CopyFolder sOEM & "\$$", sDestinationDrive & "\Windows", true
+	End If
+
+	If oFSO.FolderExists(sOEM & "\$Sys_Themes$") then
+		oFSO.CopyFolder sOEM & "\$Sys_Themes$", sDestinationDrive & "\Windows\Resources\Themes", true
+	End If
+
+	If oFSO.FolderExists(sOEM & "\$Sys_appdata_Roaming$") then
+		oFSO.CopyFolder sOEM & "\$Sys_appdata_Roaming$", sDestinationDrive & "\Users\Default\AppData\Roaming", true
+	End If
+	
+    If oFSO.FolderExists(sOEM & "\$Sys_Brand$\" & sManufacturer) then
+		sOEMSrc = sOEM & "\$Sys_Brand$\" & sManufacturer & "\"
+
+		If not oFSO.FolderExists(sDestinationDrive & "\Windows\System32\oobe\info") then
+			oFSO.CreateFolder sDestinationDrive & "\Windows\System32\oobe\info"
+			oFSO.CreateFolder sDestinationDrive & "\Windows\System32\oobe\info\Backgrounds"
+		End If
+
+		If oFSO.FileExists(sOEMSrc & "OOBE.xml") then 
+			oFSO.CopyFile sOEMSrc & "OOBE.xml", sDestinationDrive & "\Windows\System32\oobe\info\OOBE.xml", true
+		End If
+			
+		If oFSO.FileExists(sOEMSrc & sManufacturer & ".reg") then 
+			oFSO.CopyFile sOEMSrc & sManufacturer & ".reg", sDestinationDrive & "\Windows\System32\oobe\info\" & sManufacturer & ".reg", true
+
+			If not oFSO.FolderExists(sDestinationDrive & "\Windows\Setup\Scripts") then
+				oFSO.CreateFolder sDestinationDrive & "\Windows\Setup\Scripts"
+			End If
+
+			oCreateOOBEcmd
+		End If
+
+		If oFSO.FileExists(sOEMSrc & sManufacturer & ".theme") then 
+			oFSO.CopyFile sOEMSrc & sManufacturer & ".theme", sDestinationDrive & "\Windows\Resources\Themes\$OEM$.theme", true
+		End If
+ 
+		If oFSO.FileExists(sOEMSrc & "USER.bmp") then 
+			oFSO.CopyFile sOEMSrc & "USER.bmp", sDestinationDrive & "\ProgramData\Microsoft\User Account Pictures\user.bmp", true
+		End If
+
+		If oFSO.FileExists(sOEMSrc & sManufacturer & "_BADGE.bmp") then
+			oFSO.CopyFile sOEMSrc & sManufacturer & "_BADGE.bmp", sDestinationDrive & "\Windows\System32\oobe\info\" & sManufacturer & "_BADGE.bmp", true
+		End If
+
+		If oFSO.FileExists(sOEMSrc & sManufacturer & "_BADGE.PNG") then
+			oFSO.CopyFile sOEMSrc & sManufacturer & "_BADGE.PNG", sDestinationDrive & "\Windows\System32\oobe\info\" & sManufacturer & "_BADGE.png", true
+		End If
+
+		If oFSO.FileExists(sOEMSrc & sManufacturer & "_BAR.bmp") then 
+			oFSO.CopyFile sOEMSrc & sManufacturer & "_BAR.bmp", sDestinationDrive & "\Windows\System32\oobe\info\" & sManufacturer & "_BAR.bmp", true
+		End If
+
+		If oFSO.FileExists(sOEMSrc & sManufacturer & "_MCE_LOGO.PNG") then 
+			oFSO.CopyFile sOEMSrc & sManufacturer & "_MCE_LOGO.PNG", sDestinationDrive & "\Windows\System32\oobe\info\" & sManufacturer & "_MCE_LOGO.png", true
+		End If
+
+		If OSVersion = "Win7Client" then
+			If oFSO.FileExists(sOEMSrc & sManufacturer & ".XRM-MS") then
+				oFSO.CopyFile sOEMSrc & sManufacturer & ".XRM-MS", sDestinationDrive & "\Windows\System32\oobe\info\" & sManufacturer & ".XRM-MS", true
+			End If
+		End If
+
+		If oFSO.FileExists(sOEMSrc & "WALLPAPER.jpg") then 
+			oFSO.CopyFile sOEMSrc & "WALLPAPER.jpg", sDestinationDrive & "\windows\System32\oobe\info\WALLPAPER.jpg", true
+
+			If oFSO.FileExists(sDestinationDrive & "\windows\System32\oobe\info\WALLPAPER.jpg") then 
+				oFSO.CopyFile sDestinationDrive & "\windows\System32\oobe\info\WALLPAPER.jpg", sDestinationDrive & "\Windows\System32\oobe\info\Backgrounds\BackgroundDefault.jpg", true
+			End If
+		End If
+	End If
+    </script>
+</job>
