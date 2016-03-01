@@ -109,6 +109,9 @@ Class ZTIWindowsUpdate
 		If oEnvironment.Item("WsusServer") = "" then
 			oLogging.ReportProgress "Initializing Windows Update process (pass " & MSIT_WU_Count & ")", 0
 		Else
+			
+			' Set Targetgroup for the Clients to assign the correct Groups
+
 			If oEnvironment.Item("_OSTYPE") <> "" then
 				oShell.RegWrite "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\TargetGroupEnabled", 1, "REG_DWORD"
 				oShell.RegWrite "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\TargetGroup", oEnvironment.Item("_OSTYPE"), "REG_SZ"
@@ -135,14 +138,14 @@ Class ZTIWindowsUpdate
 			oShell.RegWrite "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU\AutomaticMaintenanceEnabled", 1, "REG_DWORD"
 			oShell.RegWrite "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU\AlwaysAutoRebootAtScheduledTime", 0, "REG_DWORD"
 			oShell.RegWrite "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU\RebootWarningTimeoutEnabled", 1, "REG_DWORD"
-			oShell.RegWrite "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU\RebootWarningTimeout", 30, "REG_DWORD"
+			oShell.RegWrite "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU\RebootWarningTimeout", 30, "REG_DWORD" ' Minutes
 			oShell.RegWrite "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU\RescheduleWaitTimeEnabled", 1, "REG_DWORD"
-			oShell.RegWrite "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU\RescheduleWaitTime", 30, "REG_DWORD"
+			oShell.RegWrite "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU\RescheduleWaitTime", 30, "REG_DWORD" ' Minutes
 			oShell.RegWrite "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU\AUPowerManagement", 1, "REG_DWORD"
 			oShell.RegWrite "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU\DetectionFrequencyEnabled", 1, "REG_DWORD"
-			oShell.RegWrite "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU\DetectionFrequency", 22, "REG_DWORD"
+			oShell.RegWrite "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU\DetectionFrequency", 22, "REG_DWORD" ' Hours
 			oShell.RegWrite "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU\RebootRelaunchTimeoutEnabled", 1, "REG_DWORD"
-			oShell.RegWrite "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU\RebootRelaunchTimeout", 1, "REG_DWORD"
+			oShell.RegWrite "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU\RebootRelaunchTimeout", 1, "REG_DWORD" ' Minutes
 			oShell.RegWrite "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\ElevateNonAdmins", 1, "REG_DWORD"
 			oShell.RegWrite "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AcceptTrustedPublisherCerts", 1, "REG_DWORD"
 			oShell.RegWrite "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\DoNotConnectToWindowsUpdateInternetLocations", 0, "REG_DWORD"
@@ -219,7 +222,7 @@ Class ZTIWindowsUpdate
 						iResult = oUtility.FindFile("muauth.cab", strCabPath)
 
 						If iResult <> Success then
-							'// "" will force a internet search for cab file 
+							'"" will force a internet search for cab file 
 							strCabPath = ""
 						End if
 
@@ -334,7 +337,7 @@ Class ZTIWindowsUpdate
 
 			For each kb in Item.Categories
 				if ucase(kb.Name) = "DRIVERS" then
-					bInstall = TRUE ' Some XP drivers may be marked as CanRequestUserInput. Override!
+					bInstall = FALSE ' Some XP drivers may be marked as CanRequestUserInput. Override!
 					exit for
 				elseif ucase(kb.Name) = "WINDOWS VISTA ULTIMATE LANGUAGE PACKS" then
 					bInstall = FALSE ' Most users don't want *ALL* Language Packs. Too much. Override!
