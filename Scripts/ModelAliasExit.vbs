@@ -9,6 +9,7 @@ Function SetModelAlias()
 	sModel = oEnvironment.Item("Model")
 	SetModelAlias = ""
 	sCSPVersion = ""
+	sCSPName = ""
 	sBIOSVersion = ""
 
 	Set colComputerSystemProduct = objWMI.ExecQuery("SELECT * FROM Win32_ComputerSystemProduct")
@@ -16,9 +17,16 @@ Function SetModelAlias()
 		oLogging.CreateEntry "Error querying Win32_ComputerSystemProduct: " & Err.Description & " (" & Err.Number & ")", LogTypeError
 	Else
 		For Each objComputerSystemProduct in colComputerSystemProduct
+			' Version
 			If not IsNull(objComputerSystemProduct.Version) then
 				sCSPVersion = Trim(objComputerSystemProduct.Version)
 				oLogging.CreateEntry "USEREXIT:ModelAliasExit.vbs|SetModelAlias - Win32_ComputerSystemProduct Version: " & sCSPVersion, LogTypeInfo
+			End If
+
+			' Name
+			If not IsNull(objComputerSystemProduct.Name) then
+				sCSPName = Trim(objComputerSystemProduct.Name)
+				oLogging.CreateEntry "USEREXIT:ModelAliasExit.vbs|SetModelAlias - Win32_ComputerSystemProduct Name: " & sCSPName, LogTypeInfo
 			End If
 		Next
 	End if
@@ -62,13 +70,15 @@ Function SetModelAlias()
 
 			oLogging.CreateEntry "USEREXIT:ModelAliasExit.vbs|SetModelAlias - Alias rule not found.  ModelAlias set to Model value." , LogTypeInfo
 		Case "Dell Computer Corporation", "Dell Inc.", "Dell Computer Corp."
-			' Use Model with spaces removed
-			' SetModelAlias = Replace(sModel, " ", "")
-			SetModelAlias = sModel	
-
+			SetModelAlias = sModel
+		Case "TOSHIBA"
+			If not sCSPName = "" then 
+				SetModelAlias = sCSPName
+			Else
+				SetModelAlias = sModel
+				oLogging.CreateEntry "USEREXIT:ModelAliasExit.vbs|SetModelAlias - Alias rule not found.  ModelAlias set to Model value." , LogTypeInfo
+			End If
 		Case "Hewlett-Packard"
-			' Use Model with spaces removed
-			' SetModelAlias = Replace(sModel, " ", "")
 			Select Case sModel
 				Case "HP Compaq nw8240 (PY442EA#AK8)"
 					SetModelAlias = "HP Compaq nw8240"
@@ -93,8 +103,14 @@ Function SetModelAlias()
 				SetModelAlias = sModel
 				oLogging.CreateEntry "USEREXIT:ModelAliasExit.vbs|SetModelAlias - Alias rule not found.  ModelAlias set to Model value." , LogTypeInfo
 			End IF
+		Case "LENOVO"
+			If IsNumeric(Left(sModel,4)) and not sCPVersion = "" then
+				SetModelAlias = sCSPVersion
+			Else
+				SetModelAlias = sModel
+				oLogging.CreateEntry "USEREXIT:ModelAliasExit.vbs|SetModelAlias - Alias rule not found.  ModelAlias set to Model value." , LogTypeInfo
+			End IF
 		Case "Matsushita Electric Industrial Co.,Ltd."
-			' Panasonic Toughbook models
 			If Left(sModel,2) = "CF" Then 
 				SetModelAlias = Left(sModel,5)
 			Else
@@ -141,6 +157,9 @@ Function SetModelAlias()
 				oLogging.CreateEntry "USEREXIT:ModelAliasExit.vbs|SetModelAlias - Alias rule not found.  ModelAlias set to Model value." , LogTypeWarn
 			End if 
 		End Select
+
+	oEnvironment.Item("Make") = sMake
+	oEnvironment.Item("Model") = sModel
 
 	oLogging.CreateEntry "USEREXIT:ModelAliasExit.vbs|SetModelAlias - ModelAlias has been set to " & SetModelAlias, LogTypeInfo
 	oLogging.CreateEntry "------------ Departing USEREXIT:ModelAliasExit.vbs|SetModelAlias -------------", LogTypeInfo
