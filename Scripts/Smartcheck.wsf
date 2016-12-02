@@ -1,35 +1,49 @@
-<job id="SmartCheck">
-	<script language="VBScript" src="ZTIDiskUtility.vbs"/>
+' //***************************************************************************
+' // ***** Script Header *****
+' //
+' // Solution: Solution Accelerator for Microsoft Deployment
+' // File: SMARTCheck.wsf
+' //
+' // Purpose: Script to determine if the client disk is ready for imaging.
+' //
+' // Usage: cscript SMARTCheck.wsf [/debug:true]
+' //
+' // Customer Build Version: 1.0.0
+' // Customer Script Version: 1.0.0
+' // Customer History:
+' //
+' // ***** End Header *****
+' //***************************************************************************
+
+<job id="SMARTCheck">
 	<script language="VBScript" src="ZTIUtility.vbs"/>
 	<script language="VBScript">
+	Option Explicit
 
-Dim oWMI
-Dim strComputer, sSmartStatus, sDiskCaption
-Dim colDisks, disk
+	Dim iRetVal
+	Dim oWMIa
+	Dim strComputer
+	Dim disk
 
-strComputer = "."
-sDiskCaption = ""
+	On Error Resume Next
 
-' Create objects
-Set oWMI = GetObject("winmgmts:\\" & strComputer & "\root\cimv2")
+	iRetVal = ZTIProcess
+	ProcessResults iRetVal
 
-oLogging.CreateEntry "Checking SMART Status...", LogTypeInfo
-Set colDisks = oWMI.ExecQuery("Select * from win32_DiskDrive where MediaType = 'Fixed hard disk media'")
+	On Error Goto 0
 
-For Each disk in colDisks
-	sSmartStatus = disk.Status
-	sDiskCaption = disk.Caption
+Function ZTIProcess()
+	iRetVal = Success
+	Set oWMIa = GetObject("winmgmts:\\.\root\cimv2")
 
-	oLogging.ReportProgress "Disk ("& sDiskCaption &") reports SMART Status: " & sSmartStatus, 0
+	For Each disk in oWMIa.ExecQuery("select * from win32_DiskDrive where MediaType = 'Fixed hard disk media'")
+		If disk.Status <> "OK" then
+			oLogging.CreateEntry "Disk " & disk.Index & " (" & disk.Model & ") reports " & disk.Status, LogTypeError
+			iRetVal = 1
+		End If
+	Next
 
-	If sSmartStatus = "OK" Then
-		oLogging.CreateEntry "Disk ("& sDiskCaption &") reports SMART Status: " & sSmartStatus, LogTypeInfo
-	Else
-		oLogging.CreateEntry "Disk ("& sDiskCaption &") reports SMART Status: " & sSmartStatus, LogTypeInfo
-		oLogging.CreateEntry "Deployment will end here untill the SMART problem on Disk " & sDiskCaption & " is solved!", LogTypeError
-
-		Wscript.Quit(1) 
-	End If
-Next
-    </script>
+	ZTIProcess = iRetval
+End Function
+</script>
 </job>

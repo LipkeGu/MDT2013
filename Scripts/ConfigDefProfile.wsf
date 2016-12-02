@@ -1,0 +1,152 @@
+<job id="ConfigDefProfile">
+    <script language="VBScript" src="ZTIUtility.vbs" />
+    <script language="VBScript" src="ZTIDataAccess.vbs" />
+    <script language="VBScript">
+	Dim sREGPath_HideDeskIcons
+        Dim sREGPath_UserExplorerAdv
+        Dim sREGPath_PhotoViewer
+	Dim sREGPath_ContentDelivery
+	
+	Dim iInstalledMem
+        
+	sREGPath_HideDeskIcons = "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel\"
+        sREGPath_UserExplorerAdv = "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\"
+        sREGPath_PhotoViewer = "HKLM\Software\Microsoft\Windows Photo Viewer\Capabilities\FileAssociations\"
+	sREGPath_ContentDelivery = "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager\"
+        
+        oShell.RegWrite sREGPath_HideDeskIcons & "{20D04FE0-3AEA-1069-A2D8-08002B30309D}", 0, "REG_DWORD"
+	oShell.RegWrite sREGPath_HideDeskIcons & "{F02C1A0D-BE21-4350-88B0-7367FC96EF3C}", 0, "REG_DWORD"
+
+        oShell.RegWrite sREGPath_UserExplorerAdv & "ServerAdminUI", 0, "REG_DWORD"
+        oShell.RegWrite sREGPath_UserExplorerAdv & "Hidden", 2, "REG_DWORD"
+        oShell.RegWrite sREGPath_UserExplorerAdv & "ShowCompColor", 1, "REG_DWORD"
+        oShell.RegWrite sREGPath_UserExplorerAdv & "HideFileExt", 0, "REG_DWORD"
+        oShell.RegWrite sREGPath_UserExplorerAdv & "DontPrettyPath", 0, "REG_DWORD"
+        oShell.RegWrite sREGPath_UserExplorerAdv & "ShowInfoTip", 1, "REG_DWORD"
+        oShell.RegWrite sREGPath_UserExplorerAdv & "HideIcons", 0, "REG_DWORD"
+        oShell.RegWrite sREGPath_UserExplorerAdv & "MapNetDrvBtn", 1, "REG_DWORD"
+        oShell.RegWrite sREGPath_UserExplorerAdv & "WebView", 1, "REG_DWORD"
+        oShell.RegWrite sREGPath_UserExplorerAdv & "Filter", 0, "REG_DWORD"
+        oShell.RegWrite sREGPath_UserExplorerAdv & "ShowSuperHidden", 1, "REG_DWORD"
+        oShell.RegWrite sREGPath_UserExplorerAdv & "SeparateProcess", 1, "REG_DWORD"
+        oShell.RegWrite sREGPath_UserExplorerAdv & "AutoCheckSelect", 0, "REG_DWORD"
+        oShell.RegWrite sREGPath_UserExplorerAdv & "IconsOnly", 0, "REG_DWORD"
+        oShell.RegWrite sREGPath_UserExplorerAdv & "ShowTypeOverlay", 1, "REG_DWORD"
+        oShell.RegWrite sREGPath_UserExplorerAdv & "ShowStatusBar", 1, "REG_DWORD"
+        oShell.RegWrite sREGPath_UserExplorerAdv & "ListviewAlphaSelect", 1, "REG_DWORD"
+        oShell.RegWrite sREGPath_UserExplorerAdv & "ListviewShadow", 1, "REG_DWORD"
+        oShell.RegWrite sREGPath_UserExplorerAdv & "TaskbarAnimations", 1, "REG_DWORD"
+	oShell.RegWrite sREGPath_UserExplorerAdv & "StartMenuInit", 2, "REG_DWORD"        
+	oShell.RegWrite sREGPath_UserExplorerAdv & "ReindexedProfile", 1, "REG_DWORD"
+	oShell.RegWrite sREGPath_UserExplorerAdv & "AlwaysShowMenus", 1, "REG_DWORD"
+	oShell.RegWrite sREGPath_UserExplorerAdv & "HideDrivesWithNoMedia", 0, "REG_DWORD"
+	oShell.RegWrite sREGPath_UserExplorerAdv & "SharingWizardOn", 0, "REG_DWORD"
+	oShell.RegWrite sREGPath_UserExplorerAdv & "NavPaneShowAllFolders", 0, "REG_DWORD"
+	oShell.RegWrite sREGPath_UserExplorerAdv & "NavPaneExpandToCurrentFolder", 1, "REG_DWORD"
+	oShell.RegWrite sREGPath_UserExplorerAdv & "NavPaneShowFavorites", 0, "REG_DWORD"
+	oShell.RegWrite sREGPath_UserExplorerAdv & "TaskbarSizeMove", 0, "REG_DWORD"
+	oShell.RegWrite sREGPath_UserExplorerAdv & "DisablePreviewDesktop", 0, "REG_DWORD"
+	oShell.RegWrite sREGPath_UserExplorerAdv & "TaskbarGlomLevel", 0, "REG_DWORD"
+	oShell.RegWrite sREGPath_UserExplorerAdv & "ApplicationSearchHistory", 1, "REG_DWORD"
+	oShell.RegWrite sREGPath_UserExplorerAdv & "StoreAppsOnTaskbar", 1, "REG_DWORD"
+        oShell.RegWrite sREGPath_UserExplorerAdv & "EnableStartMenu", 1, "REG_DWORD"
+        oShell.RegWrite sREGPath_UserExplorerAdv & "ShowTaskViewButton", 0, "REG_DWORD"
+        oShell.RegWrite sREGPath_UserExplorerAdv & "DesktopLivePreviewHoverTime", 1, "REG_DWORD"
+	oShell.RegWrite sREGPath_UserExplorerAdv & "DontUsePowerShellOnWinX", 1, "REG_DWORD"
+
+	oShell.RegWrite sREGPath_UserExplorerAdv & "Start_TrackDocs", 0, "REG_DWORD"
+        oShell.RegWrite sREGPath_UserExplorerAdv & "Start_TrackProgs", 0, "REG_DWORD"
+	oShell.RegWrite sREGPath_UserExplorerAdv & "Start_ShowRun", 1, "REG_DWORD"
+	oShell.RegWrite sREGPath_UserExplorerAdv & "Start_TrackShareContractHistory", 1, "REG_DWORD"
+	oShell.RegWrite sREGPath_UserExplorerAdv & "Start_ShareContractHistoryCount", 14, "REG_DWORD"
+	oShell.RegWrite sREGPath_UserExplorerAdv & "Start_TrackShareContractMFU", 1, "REG_DWORD"
+	oShell.RegWrite sREGPath_UserExplorerAdv & "Start_TrackSearchContract", 1, "REG_DWORD"
+	oShell.RegWrite sREGPath_UserExplorerAdv & "Start_SearchFiles", 2, "REG_DWORD"
+
+        oShell.RegWrite "HKCU\Software\Microsoft\Windows\CurrentVersion\Search\SearchboxTaskbarMode", 0, "REG_DWORD"
+
+	oShell.RegWrite "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects\VisualFXSetting", 2, "REG_DWORD"
+	oShell.RegWrite "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\ControlPanel\StartupPage", 1, "REG_DWORD"
+	oShell.RegWrite "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\ControlPanel\AllItemsIconView", 0, "REG_DWORD"
+	oShell.RegWrite "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Serialize\StartupDelayInMSec", 0, "REG_DWORD"
+
+	oShell.RegWrite "HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon\EnableFirstLogonAnimation", 0, "REG_DWORD"
+	oShell.RegWrite "HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon\DisableBackButton", 0, "REG_DWORD"
+	oShell.RegWrite "HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon\DisableCAD", 1, "REG_DWORD"
+
+	oShell.RegWrite "HKCU\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize\ColorPrevalence", 0, "REG_DWORD"
+	oShell.RegWrite "HKCU\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize\EnableTransparency", 1, "REG_DWORD"
+
+	oShell.RegWrite "HKCU\Control Panel\Desktop\JPEGImportQuality", 100, "REG_DWORD"
+	oShell.RegWrite "HKCU\Control Panel\Desktop\MenuShowDelay", 1, "REG_DWORD"
+	oShell.RegWrite "HKCU\Control Panel\Desktop\ActiveWndTrkTimeout ", 80, "REG_DWORD"
+	oShell.RegWrite "HKCU\Control Panel\Mouse\MouseHoverTime", 1, "REG_DWORD"
+
+	oShell.RegWrite "HKCU\Software\Microsoft\Windows\DWM\EnableAeroPeek", 1, "REG_DWORD"
+
+	oShell.RegWrite "HKLM\System\CurrentControlSet\Control\CrashControl\AutoReboot", 0, "REG_DWORD"
+	oShell.RegWrite "HKLM\System\CurrentControlSet\Control\CrashControl\CrashDumpEnabled", 3, "REG_DWORD"
+	oShell.RegWrite "HKLM\System\CurrentControlSet\Control\CrashControl\AlwaysKeepMemoryDump", 0, "REG_DWORD"
+	oShell.RegWrite "HKLM\System\CurrentControlSet\Control\CrashControl\Overwrite", 1, "REG_DWORD"
+	oShell.RegWrite "HKLM\System\CurrentControlSet\Control\CrashControl\DisableEmoticon", 1, "REG_DWORD"
+
+	oShell.RegWrite "HKLM\System\CurrentControlSet\Control\FileSystem\NtfsDisable8dot3NameCreation", 1, "REG_DWORD"
+	oShell.RegWrite "HKLM\System\CurrentControlSet\Control\FileSystem\NtfsDisableLastAccessUpdate", 1, "REG_DWORD"
+	oShell.RegWrite "HKLM\System\CurrentControlSet\Control\FileSystem\MaximumTunnelEntries", 512, "REG_DWORD"
+	oShell.RegWrite "HKLM\System\CurrentControlSet\Control\FileSystem\NtfsMftZoneReservation", 1, "REG_DWORD"
+	oShell.RegWrite "HKLM\System\CurrentControlSet\Control\FileSystem\DontVerifyRandomDrivers", 1, "REG_DWORD"
+
+	oShell.RegWrite "HKLM\System\CurrentControlSet\Control\Session Manager\Environment\devmgr_show_nonpresent_devices", "1", "REG_SZ"
+	oShell.RegWrite "HKLM\System\CurrentControlSet\Services\Tcpip\QoS\Do not use NLA", "1", "REG_SZ"
+
+	oShell.RegWrite "HKLM\System\CurrentControlSet\Control\Session Manager\Executive\AdditionalDelayedWorkerThreads", 64, "REG_DWORD"
+	oShell.RegWrite "HKLM\System\CurrentControlSet\Control\Session Manager\Executive\AdditionalCriticalWorkerThreads", 64, "REG_DWORD"
+
+	oShell.RegWrite "HKLM\System\CurrentControlSet\Control\Session Manager\Memory Management\LargeSystemCache", 0, "REG_DWORD"
+	oShell.RegWrite "HKLM\System\CurrentControlSet\Control\Session Manager\Memory Management\PrefetchParameters\EnablePrefetcher", 0, "REG_DWORD"
+	oShell.RegWrite "HKLM\System\CurrentControlSet\Control\Session Manager\Memory Management\ClearPageFileAtShutdown", 0, "REG_DWORD"
+	oShell.RegWrite "HKLM\System\CurrentControlSet\Control\Session Manager\Memory Management\NonPagedPoolQuota", 0, "REG_DWORD"
+	oShell.RegWrite "HKLM\System\CurrentControlSet\Control\Session Manager\Memory Management\NonPagedPoolSize", 0, "REG_DWORD"
+	oShell.RegWrite "HKLM\System\CurrentControlSet\Control\Session Manager\Memory Management\SessionViewSize", 48, "REG_DWORD"
+	oShell.RegWrite "HKLM\System\CurrentControlSet\Control\Session Manager\Memory Management\SessionPoolSize", 4, "REG_DWORD"
+	oShell.RegWrite "HKLM\System\CurrentControlSet\Control\Session Manager\Memory Management\DisablePagingExecutive", 1, "REG_DWORD"
+	oShell.RegWrite "HKLM\System\CurrentControlSet\Control\Session Manager\Memory Management\PagedPoolSize", 0, "REG_DWORD"
+	oShell.RegWrite "HKLM\System\CurrentControlSet\Control\Session Manager\Memory Management\PagedPoolQuota", 0, "REG_DWORD"
+	oShell.RegWrite "HKLM\System\CurrentControlSet\Control\Session Manager\Memory Management\PoolUsageMaximum", 60, "REG_DWORD"
+
+	oShell.RegWrite "HKLM\System\CurrentControlSet\Control\Session Manager\I/O System\DisableDiskCounters", 1, "REG_DWORD"
+	oShell.RegWrite "HKLM\System\CurrentControlSet\Control\Session Manager\I/O System\AllowRemoteDASD", 0, "REG_DWORD"
+
+	oShell.RegWrite "HKLM\System\CurrentControlSet\Control\Session Manager\Kernel\DisableAutoBoost", 1, "REG_DWORD"
+	oShell.RegWrite "HKLM\System\CurrentControlSet\Control\Session Manager\Kernel\SerializeTimerExpiration", 2, "REG_DWORD"
+	oShell.RegWrite "HKLM\System\CurrentControlSet\Control\Session Manager\Kernel\DisableExceptionChainValidation", 1, "REG_DWORD"
+	oShell.RegWrite "HKLM\System\CurrentControlSet\Control\Session Manager\Kernel\MaximumSharedReadyQueueSize", 1, "REG_DWORD"
+	oShell.RegWrite "HKLM\System\CurrentControlSet\Control\Session Manager\Kernel\obcaseinsensitive", 1, "REG_DWORD"
+
+	oShell.RegWrite "HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters\MaxThreadsPerQueue", 40, "REG_DWORD"
+	oShell.RegWrite "HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters\TreatHostAsStableStorage", 1, "REG_DWORD"
+
+	oShell.RegWrite sREGPath_PhotoViewer & ".tif", "PhotoViewer.FileAssoc.Tiff", "REG_SZ"
+        oShell.RegWrite sREGPath_PhotoViewer & ".tiff", "PhotoViewer.FileAssoc.Tiff", "REG_SZ"
+        oShell.RegWrite sREGPath_PhotoViewer & ".bmp", "PhotoViewer.FileAssoc.Tiff", "REG_SZ"
+        oShell.RegWrite sREGPath_PhotoViewer & ".dib", "PhotoViewer.FileAssoc.Tiff", "REG_SZ"
+        oShell.RegWrite sREGPath_PhotoViewer & ".gif", "PhotoViewer.FileAssoc.Tiff", "REG_SZ"
+        oShell.RegWrite sREGPath_PhotoViewer & ".jfif", "PhotoViewer.FileAssoc.Tiff", "REG_SZ"
+        oShell.RegWrite sREGPath_PhotoViewer & ".jpe", "PhotoViewer.FileAssoc.Tiff", "REG_SZ"
+        oShell.RegWrite sREGPath_PhotoViewer & ".jpeg", "PhotoViewer.FileAssoc.Tiff", "REG_SZ"
+	oShell.RegWrite sREGPath_PhotoViewer & ".jpg", "PhotoViewer.FileAssoc.Tiff", "REG_SZ"
+        oShell.RegWrite sREGPath_PhotoViewer & ".jxr", "PhotoViewer.FileAssoc.Tiff", "REG_SZ"
+        oShell.RegWrite sREGPath_PhotoViewer & ".png", "PhotoViewer.FileAssoc.Tiff", "REG_SZ"
+
+ 	oShell.RegWrite sREGPath_ContentDelivery & "ContentDeliveryAllowed", 0, "REG_DWORD"
+ 	oShell.RegWrite sREGPath_ContentDelivery & "FeatureManagementEnabled", 1, "REG_DWORD"
+	oShell.RegWrite sREGPath_ContentDelivery & "OemPreInstalledAppsEnabled", 0, "REG_DWORD"
+	oShell.RegWrite sREGPath_ContentDelivery & "PreInstalledAppsEnabled", 0, "REG_DWORD"
+ 	oShell.RegWrite sREGPath_ContentDelivery & "SoftLandingEnabled", 0, "REG_DWORD"
+ 	oShell.RegWrite sREGPath_ContentDelivery & "SilentInstalledAppsEnabled", 0, "REG_DWORD"
+	oShell.RegWrite sREGPath_ContentDelivery & "SystemPaneSuggestionsEnabled", 0, "REG_DWORD"
+
+	oShell.RegWrite "HKCU\Software\Classes\CLSID\{031E4825-7B94-4dc3-B131-E946B44C8DD5}\System.IsPinnedToNameSpaceTree", 1, "REG_DWORD"
+	
+    </script>
+</job>

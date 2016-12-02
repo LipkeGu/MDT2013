@@ -1,17 +1,27 @@
 <job id="CopyOEM">
-    <script language="VBScript" src="ZTIDiskUtility.vbs" />
-    <script language="VBScript" src="ZTIUtility.vbs" />
-    <script language="VBScript">
+	<script language="VBScript" src="ZTIDiskUtility.vbs" />
+	<script language="VBScript" src="ZTIUtility.vbs" />
+	<script language="VBScript">
 
 	Dim sOEM, sDestinationDrive
-    Dim oWMI,  objFile, sMFG, gMFG, outFile, sNEWMFG, colBaseBoard, colComputerInfo, strComputer, board, scomputer, sManufacturer, sOEMSrc
-    sMFG = "_NONE_"
+	Dim oWMI,  objFile, sMFG, gMFG, outFile, sNEWMFG, colBaseBoard, colComputerInfo, strComputer, board, scomputer, sManufacturer, sOEMSrc
+	sMFG = "_NONE_"
 	sNEWMFG = "_NONE_"
 	sOEMSrc = ""
-    sManufacturer = "_NONE_"
-    strComputer = "."
+	sManufacturer = "_NONE_"
+	strComputer = "."
 	outFile = ""
-		
+
+	Function oCreateOOBEcmd
+		outFile = sDestinationDrive & "\Windows\Setup\Scripts\OOBE.cmd"
+		If not oFSO.FileExists(outFile) then
+			Set objFile = oFSO.CreateTextFile(outFile, true)
+
+			objFile.Write "@Echo off" & vbCrLf & "cls" & vbCrLf & "REG IMPORT \Windows\System32\oobe\info\" & sManufacturer & ".reg" & vbCrLf
+			objFile.Close
+		End If
+	End Function
+
 	Function sParseMFG(gMFG)
 		select case UCase(gMFG) 
 		case "ACER"
@@ -313,33 +323,33 @@
 		case "SYSTEM MANUFACTURER"
 			sMFG = "SYSTEM MANUFACTURER"
 		End select
-        
-        sManufacturer = sMFG
-    End Function
 
-    Set oWMI = GetObject("winmgmts:\\" & strComputer & "\root\cimv2")
-    Set colComputerInfo = oWMI.ExecQuery("Select * from win32_Computersystem")
+		sManufacturer = sMFG
+	End Function
 
-    For Each scomputer in colComputerInfo 
-        sParseMFG(scomputer.Manufacturer)
-    Next
+	Set oWMI = GetObject("winmgmts:\\" & strComputer & "\root\cimv2")
+	Set colComputerInfo = oWMI.ExecQuery("Select * from win32_Computersystem")
 
-    If sManufacturer = "SYSTEM MANUFACTURER" Or sManufacturer = "_NONE_" then 
-        Set colBaseBoard = oWMI.ExecQuery("Select * from win32_Baseboard")
-        
-        For Each board in colBaseBoard
-            sParseMFG(board.Manufacturer)
-        Next
+	For Each scomputer in colComputerInfo 
+		sParseMFG(scomputer.Manufacturer)
+	Next
 
-        If sManufacturer = "_NONE_" then
-            oLogging.CreateEntry "[OEM] Using Manufacturer: " & sManufacturer & " for " & sNEWMFG, LogTypeInfo
-        Else
-            oLogging.CreateEntry "[OEM] Using Mainboard Manufacturer: " & sManufacturer, LogTypeInfo
-        End If
-    Else
-        oLogging.CreateEntry "[OEM] Using Computer Manufacturer: " & sManufacturer, LogTypeInfo
-    End If
-	
+	If sManufacturer = "SYSTEM MANUFACTURER" Or sManufacturer = "_NONE_" then 
+		Set colBaseBoard = oWMI.ExecQuery("Select * from win32_Baseboard")
+
+		For Each board in colBaseBoard
+			sParseMFG(board.Manufacturer)
+		Next
+
+		If sManufacturer = "_NONE_" then
+			oLogging.CreateEntry "[OEM] Using Manufacturer: " & sManufacturer & " for " & sNEWMFG, LogTypeInfo
+		Else
+			oLogging.CreateEntry "[OEM] Using Mainboard Manufacturer: " & sManufacturer, LogTypeInfo
+		End If
+	Else
+		oLogging.CreateEntry "[OEM] Using Computer Manufacturer: " & sManufacturer, LogTypeInfo
+	End If
+
 	sDestinationDrive = oUtility.GetOSTargetDriveLetter
 	
 	If oFSO.FolderExists(oEnvironment.Item("DeployRoot") & "\Control\" & oEnvironment.Item("TaskSequenceID") & "\$OEM$") then
@@ -351,18 +361,6 @@
 	Else
 		sOEM = oEnvironment.Item("DeployRoot") & "\$OEM$"
 	End If
-
-    Function oCreateOOBEcmd
-		outFile = sDestinationDrive & "\Windows\Setup\Scripts\OOBE.cmd"
-			
-		If not oFSO.FileExists(outFile) then
-			Set objFile = oFSO.CreateTextFile(outFile, true)
-
-			' Import the OEM Settings
-			objFile.Write "@Echo off" & vbCrLf & "cls" & vbCrLf & "REG IMPORT \Windows\System32\oobe\info\" & sManufacturer & ".reg" & vbCrLf
-			objFile.Close
-		End If
-	End Function
 
 	If oFSO.FolderExists(sOEM & "\$1") then
 		oFSO.CopyFolder sOEM & "\$1", sDestinationDrive, true
@@ -380,7 +378,7 @@
 		oFSO.CopyFolder sOEM & "\$Sys_appdata_Roaming$", sDestinationDrive & "\Users\Default\AppData\Roaming", true
 	End If
 	
-    If oFSO.FolderExists(sOEM & "\$Sys_Brand$\" & sManufacturer) then
+	If oFSO.FolderExists(sOEM & "\$Sys_Brand$\" & sManufacturer) then
 		sOEMSrc = sOEM & "\$Sys_Brand$\" & sManufacturer & "\"
 
 		If not oFSO.FolderExists(sDestinationDrive & "\Windows\System32\oobe\info") then
@@ -391,7 +389,7 @@
 		If oFSO.FileExists(sOEMSrc & "OOBE.xml") then 
 			oFSO.CopyFile sOEMSrc & "OOBE.xml", sDestinationDrive & "\Windows\System32\oobe\info\OOBE.xml", true
 		End If
-			
+
 		If oFSO.FileExists(sOEMSrc & sManufacturer & ".reg") then 
 			oFSO.CopyFile sOEMSrc & sManufacturer & ".reg", sDestinationDrive & "\Windows\System32\oobe\info\" & sManufacturer & ".reg", true
 
@@ -440,5 +438,5 @@
 			End If
 		End If
 	End If
-    </script>
+	</script>
 </job>
