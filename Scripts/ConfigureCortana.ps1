@@ -19,7 +19,7 @@ New-ItemProperty -Path $registyPath -Name AllowCortana -Value $enable -PropertyT
 New-ItemProperty -Path $registyPath -Name AllowCortanaAboveLock -Value $lockscreen -PropertyType DWORD -Force | Out-Null
 New-ItemProperty -Path $registyPath -Name AllowSearchToUseLocation -Value $position -PropertyType DWORD -Force | Out-Null
 if ($enable -eq 1) {
-    Write-Host "Cortana enabeled!"
+    Write-Host "Cortana enabled!"
 }
 else {
     Write-Host "Cortana disabled!"
