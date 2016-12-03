@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AdminDeploymentCustomizations xmlns="http://schemas.microsoft.com/wix/2011/AdminDeployment">
+  <BundleCustomizations TargetDir="default" NoWeb="default" />
+  <SelectableItemCustomizations>
+    <SelectableItemCustomization Id="VC_MFC_Libraries" Hidden="no" Selected="yes" />
+    <SelectableItemCustomization Id="SQL" Hidden="no" Selected="no" />
+    <SelectableItemCustomization Id="WebTools" Hidden="no" Selected="no" />
+    <SelectableItemCustomization Id="MDDCPlusPlus" Hidden="no" Selected="no" />
+    <SelectableItemCustomization Id="MDDJS" Hidden="no" Selected="no" />
+    <SelectableItemCustomization Id="SilverLight_Developer_Kit" Hidden="no" Selected="no" />
+    <SelectableItemCustomization Id="ToolsForWin81_WP80_WP81" Hidden="no" Selected="yes" />
+    <SelectableItemCustomization Id="WindowsPhone81Emulators" Hidden="no" Selected="no" />
+ 
+    <SelectableItemCustomization Id="ModernBlendHidden" Selected="no" />
+    <SelectableItemCustomization Id="BlissHidden" Selected="no" />
+    <SelectableItemCustomization Id="HelpHidden" Selected="no" />
+    <SelectableItemCustomization Id="LocalDBHidden" Selected="yes" />
+    <SelectableItemCustomization Id="NetFX4Hidden" Selected="no" />
+    <SelectableItemCustomization Id="NetFX45Hidden" Selected="no" />
+    <SelectableItemCustomization Id="PortableDTPHidden" Selected="no" />
+    <SelectableItemCustomization Id="PreEmptiveDotfuscatorHidden" Selected="no" />
+    <SelectableItemCustomization Id="PreEmptiveAnalyticsHidden" Selected="no" />
+    <SelectableItemCustomization Id="ProfilerHidden" Selected="yes" />
+    <SelectableItemCustomization Id="ReportingHidden" Selected="no" />
+    <SelectableItemCustomization Id="RoslynLanguageServices" Selected="yes" />
+    <SelectableItemCustomization Id="SDKTools3Hidden" Selected="no" />
+    <SelectableItemCustomization Id="SDKTools4Hidden" Selected="no" />
+    <SelectableItemCustomization Id="Silverlight5DRTHidden" Selected="no" />
+    <SelectableItemCustomization Id="SQLCEHidden" Selected="no" />
+    <SelectableItemCustomization Id="SQLCLRTypesHidden" Selected="no" />
+    <SelectableItemCustomization Id="SQLDOMHidden" Selected="no" />
+    <SelectableItemCustomization Id="SQLSharedManagementObjectsHidden" Selected="no" />
+    <SelectableItemCustomization Id="TSQLHidden" Selected="no" />
+    <SelectableItemCustomization Id="VCToolsHidden" Selected="no" />
+    <SelectableItemCustomization Id="VCCRTHidden" Selected="yes" />
+    <SelectableItemCustomization Id="VCLibsHidden" Selected="yes" />
+    <SelectableItemCustomization Id="VCDebugHidden" Selected="no" />
+    <SelectableItemCustomization Id="WCFDataServicesHidden" Selected="no" />
+    <SelectableItemCustomization Id="Windows_EspCHidden" Selected="no" />
+    <SelectableItemCustomization Id="Windows_EspC_LPCHidden" Selected="no" />
+    <SelectableItemCustomization Id="WinBlue_Runtime_IntellisenseHidden" Selected="no" />
+    <SelectableItemCustomization Id="WinBlue_SDK_App_Cert_Kit_x64Hidden" Selected="no" />
+    <SelectableItemCustomization Id="WinBlue_SDK_App_Cert_Kit_x86Hidden" Selected="no" />
+    <SelectableItemCustomization Id="WinBlue_SDK_DesktopHidden" Selected="no" />
+    <SelectableItemCustomization Id="WinBlue_SDK_DX_Redist_x64Hidden" Selected="no" />
+    <SelectableItemCustomization Id="WinBlue_SDK_DX_Redist_x86Hidden" Selected="no" />
+    <SelectableItemCustomization Id="WinBlue_MetroSDKHidden" Selected="no" />
+    <SelectableItemCustomization Id="WinBlue_SDK_Metro_DX_Redist_x64Hidden" Selected="no" />
+    <SelectableItemCustomization Id="WinBlue_SDK_Metro_DX_Redist_x86Hidden" Selected="no" />
+  </SelectableItemCustomizations>
+</AdminDeploymentCustomizations>
