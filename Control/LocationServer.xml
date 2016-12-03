@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<servers>
+    <QueryDefault></QueryDefault>
+    <server>
+        <serverid>1</serverid>
+        <friendlyname>
+          Production-Share
+        </friendlyname>
+        <UNCPath>\\LEDE\Reminst_Production</UNCPath>
+    </server>
+    <server>
+        <serverid>2</serverid>
+        <friendlyname>
+          Factory-Share
+        </friendlyname>
+        <UNCPath>\\LEDE\Reminst_factory</UNCPath>
+    </server>
+</servers>
