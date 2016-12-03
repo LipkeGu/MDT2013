@@ -1,0 +1,214 @@
+Computer
+Software\Policies\Microsoft\Internet Explorer\Download
+RunInvalidSignatures
+DWORD:1
+
+Computer
+Software\Policies\Microsoft\Internet Explorer\Download
+CheckExeSignatures
+SZ:yes
+
+Computer
+Software\Policies\Microsoft\Internet Explorer\Feeds
+DisableEnclosureDownload
+DWORD:1
+
+Computer
+Software\Policies\Microsoft\Internet Explorer\Geolocation
+PolicyDisableGeolocation
+DWORD:1
+
+Computer
+Software\Policies\Microsoft\Internet Explorer\Infodelivery\Restrictions
+NoUpdateCheck
+DWORD:1
+
+Computer
+Software\Policies\Microsoft\Internet Explorer\Infodelivery\Restrictions
+NoSplash
+DWORD:1
+
+Computer
+Software\Policies\Microsoft\Internet Explorer\Main
+Isolation64Bit
+DWORD:1
+
+Computer
+Software\Policies\Microsoft\Internet Explorer\Main
+DisableEPMCompat
+DWORD:1
+
+Computer
+Software\Policies\Microsoft\Internet Explorer\Main
+Isolation
+SZ:PMEM
+
+Computer
+Software\Policies\Microsoft\Internet Explorer\Main
+AssociationActivationMode
+DWORD:2
+
+Computer
+Software\Policies\Microsoft\Internet Explorer\Main
+EnableAutoUpgrade
+DWORD:0
+
+Computer
+Software\Policies\Microsoft\Internet Explorer\Main
+AlwaysShowMenus
+DELETE
+
+Computer
+Software\Policies\Microsoft\Internet Explorer\Main
+DisableAddSiteMode
+DWORD:1
+
+Computer
+Software\Policies\Microsoft\Internet Explorer\Main
+DisablePasswordReveal
+DWORD:1
+
+Computer
+Software\Policies\Microsoft\Internet Explorer\MINIE
+ShowTabsBelowAddressBar
+DWORD:1
+
+Computer
+Software\Policies\Microsoft\Internet Explorer\PhishingFilter
+PreventOverrideAppRepUnknown
+DWORD:1
+
+Computer
+Software\Policies\Microsoft\Internet Explorer\PhishingFilter
+PreventOverride
+DWORD:1
+
+Computer
+Software\Policies\Microsoft\Internet Explorer\PhishingFilter
+EnabledV9
+DWORD:1
+
+Computer
+Software\Policies\Microsoft\Internet Explorer\Recovery
+AutoRecover
+DWORD:2
+
+Computer
+Software\Policies\Microsoft\Internet Explorer\Recovery
+NoReopenLastSession
+DWORD:1
+
+Computer
+Software\Policies\Microsoft\Internet Explorer\Restrictions
+NoCrashDetection
+DWORD:1
+
+Computer
+Software\Policies\Microsoft\Internet Explorer\Restrictions
+NoHelpMenu
+DWORD:1
+
+Computer
+Software\Policies\Microsoft\Internet Explorer\Safety\ActiveXFiltering
+IsEnabled
+DWORD:1
+
+Computer
+Software\Policies\Microsoft\Internet Explorer\Security
+DisableSecuritySettingsCheck
+DWORD:0
+
+Computer
+Software\Policies\Microsoft\Internet Explorer\Security\ActiveX
+BlockNonAdminActiveXInstall
+DWORD:1
+
+Computer
+Software\Policies\Microsoft\Internet Explorer\SQM
+DisableCustomerImprovementProgram
+DWORD:1
+
+Computer
+Software\Policies\Microsoft\Internet Explorer\Suggested Sites
+Enabled
+DWORD:0
+
+Computer
+Software\Policies\Microsoft\Internet Explorer\TabbedBrowsing
+NewTabPageShow
+DWORD:1
+
+Computer
+Software\Policies\Microsoft\Internet Explorer\TabbedBrowsing
+QuickTabsThreshold
+DWORD:0
+
+Computer
+Software\Policies\Microsoft\Internet Explorer\Toolbars\Restrictions
+NoNavBar
+DWORD:0
+
+Computer
+Software\Policies\Microsoft\Internet Explorer\Toolbars\Restrictions
+NoCommandBar
+DWORD:0
+
+Computer
+Software\Policies\Microsoft\MicrosoftEdge\Extensions
+ExtensionsEnabled
+DWORD:1
+
+Computer
+Software\Policies\Microsoft\MicrosoftEdge\F12
+AllowDeveloperTools
+DWORD:0
+
+Computer
+Software\Policies\Microsoft\MicrosoftEdge\Main
+Use FormSuggest
+SZ:no
+
+Computer
+Software\Policies\Microsoft\MicrosoftEdge\Main
+AllowPopups
+SZ:yes
+
+Computer
+Software\Policies\Microsoft\MicrosoftEdge\Main
+SendIntranetTraffictoInternetExplorer
+DWORD:1
+
+Computer
+Software\Policies\Microsoft\MicrosoftEdge\Main
+DoNotTrack
+DWORD:1
+
+Computer
+Software\Policies\Microsoft\MicrosoftEdge\Main
+AllowInPrivate
+DWORD:1
+
+Computer
+Software\Policies\Microsoft\MicrosoftEdge\Main
+FormSuggest Passwords
+SZ:no
+
+Computer
+Software\Policies\Microsoft\MicrosoftEdge\PhishingFilter
+EnabledV9
+DWORD:1
+
+Computer
+Software\Policies\Microsoft\MicrosoftEdge\PhishingFilter
+PreventOverride
+DWORD:1
+
+Computer
+Software\Policies\Microsoft\MicrosoftEdge\SearchScopes
+ShowSearchSuggestionsGlobal
+DWORD:0
+
+Computer
+Software\Policies\Microsoft\MicrosoftEdge\ServiceUI
+AllowWebContentOnNewTabPage
+DWORD:0

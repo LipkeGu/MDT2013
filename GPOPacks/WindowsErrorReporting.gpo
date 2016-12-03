@@ -1,0 +1,154 @@
+Computer
+Software\Policies\Microsoft\Windows\Windows Error Reporting
+AutoApproveOSDumps
+DWORD:0
+
+Computer
+Software\Policies\Microsoft\Windows\Windows Error Reporting
+BypassDataThrottling
+DWORD:0
+
+Computer
+Software\Policies\Microsoft\Windows\Windows Error Reporting
+BypassNetworkCostThrottling
+DWORD:0
+
+Computer
+Software\Policies\Microsoft\Windows\Windows Error Reporting
+BypassPowerThrottling
+DWORD:0
+
+Computer
+Software\Policies\Microsoft\Windows\Windows Error Reporting
+Disabled
+DWORD:1
+
+Computer
+Software\Policies\Microsoft\Windows\Windows Error Reporting
+DontShowUI
+DWORD:0
+
+Computer
+Software\Policies\Microsoft\Windows\Windows Error Reporting
+DontSendAdditionalData
+DWORD:1
+
+Computer
+Software\Policies\Microsoft\Windows\Windows Error Reporting
+LoggingDisabled
+DWORD:0
+
+Computer
+Software\Policies\Microsoft\Windows\Windows Error Reporting
+CorporateWerServer
+DELETE
+
+Computer
+Software\Policies\Microsoft\Windows\Windows Error Reporting
+CorporateWerUseSSL
+DELETE
+
+Computer
+Software\Policies\Microsoft\Windows\Windows Error Reporting
+CorporateWerUploadOnFreeNetworksOnly
+DELETE
+
+Computer
+Software\Policies\Microsoft\Windows\Windows Error Reporting
+CorporateWerPortNumber
+DELETE
+
+Computer
+Software\Policies\Microsoft\Windows\Windows Error Reporting
+DisableQueue
+DWORD:1
+
+Computer
+Software\Policies\Microsoft\Windows\Windows Error Reporting
+ForceQueue
+DELETE
+
+Computer
+Software\Policies\Microsoft\Windows\Windows Error Reporting
+MaxQueueCount
+DELETE
+
+Computer
+Software\Policies\Microsoft\Windows\Windows Error Reporting
+MaxQueueSize
+DELETE
+
+Computer
+Software\Policies\Microsoft\Windows\Windows Error Reporting
+MinFreeDiskSpace
+DELETE
+
+Computer
+Software\Policies\Microsoft\Windows\Windows Error Reporting
+QueuePesterInterval
+DELETE
+
+Computer
+Software\Policies\Microsoft\Windows\Windows Error Reporting\Consent
+DefaultConsent
+DWORD:1
+
+Computer
+Software\Policies\Microsoft\PCHealth\ErrorReporting
+ForceQueueMode
+DWORD:1
+
+Computer
+Software\Policies\Microsoft\PCHealth\ErrorReporting
+ShowUI
+DWORD:0
+
+Computer
+Software\Policies\Microsoft\PCHealth\ErrorReporting
+IncludeShutdownErrs
+DWORD:0
+
+Computer
+Software\Policies\Microsoft\PCHealth\ErrorReporting
+AllOrNone
+DWORD:1
+
+Computer
+Software\Policies\Microsoft\PCHealth\ErrorReporting
+IncludeMicrosoftApps
+DWORD:1
+
+Computer
+Software\Policies\Microsoft\PCHealth\ErrorReporting
+IncludeWindowsApps
+DWORD:1
+
+Computer
+Software\Policies\Microsoft\PCHealth\ErrorReporting
+IncludeKernelFaults
+DWORD:1
+
+Computer
+Software\Policies\Microsoft\PCHealth\ErrorReporting\DW
+DWNoExternalURL
+DWORD:1
+
+Computer
+Software\Policies\Microsoft\PCHealth\ErrorReporting\DW
+DWNoFileCollection
+DWORD:1
+
+Computer
+Software\Policies\Microsoft\PCHealth\ErrorReporting\DW
+DWNoSecondLevelCollection
+DWORD:1
+
+Computer
+Software\Policies\Microsoft\PCHealth\ErrorReporting\DW
+DWFileTreeRoot
+SZ:
+
+Computer
+Software\Policies\Microsoft\PCHealth\ErrorReporting\DW
+DWAllowHeadless
+DWORD:1

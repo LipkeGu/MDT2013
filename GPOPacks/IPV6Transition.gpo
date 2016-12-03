@@ -1,0 +1,14 @@
+Computer
+Software\Policies\Microsoft\Windows\TCPIP\v6Transition
+Teredo_State
+SZ:Disabled
+
+Computer
+Software\Policies\Microsoft\Windows\TCPIP\v6Transition
+ISATAP_State
+SZ:Disabled
+
+Computer
+Software\Policies\Microsoft\Windows\TCPIP\v6Transition
+6to4_State
+SZ:Disabled

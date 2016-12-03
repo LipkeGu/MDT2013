@@ -1,0 +1,9 @@
+User
+Software\Microsoft\Windows\CurrentVersion\Policies\Explorer
+MemCheckBoxInRunDlg
+DWORD:1
+
+User
+Software\Policies\Microsoft\Windows\Explorer
+ShowRunAsDifferentUserInStart
+DWORD:1
